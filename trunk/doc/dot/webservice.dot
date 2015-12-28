@@ -1,0 +1,44 @@
+
+subgraph clusterWebService {
+label = "WebService"
+
+EnumWebServiceName [
+label = "{\
+enum WebServiceName\
+|\
+}"
+]
+
+WebService [
+label = "{\
+WebService\
+|\
++ pure virtual serve() : int\l\
+|\
+}"
+]
+
+Project [
+label = "{\
+Project\
+|\
++ Project()\l\
++ CreateProject()\l\
++ getType() : WebService::Type\l\
+|\
+}"
+]
+
+Audit [
+label = "{\
+Audit\
+|\
++ Audit()\l\
++ CreateAudit()\l\
++ getType() : WebService::Type\l\
+|\
+}"
+]
+
+}
+

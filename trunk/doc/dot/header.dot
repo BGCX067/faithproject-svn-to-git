@@ -1,0 +1,17 @@
+digraph G {
+fontname = "Bitstream Vera Sans"
+fontsize = 8
+compound = true
+
+node [
+fontname = "Bitstream Vera Sans"
+fontsize = 8
+shape = "record"
+]
+
+edge [
+fontname = "Bitstream Vera Sans"
+fontsize = 8
+minlen = 2
+]
+

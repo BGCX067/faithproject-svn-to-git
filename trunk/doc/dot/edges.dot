@@ -1,0 +1,73 @@
+
+// Composition
+edge [
+dir = "back"
+taillabel = ""
+arrowtail = "odiamond"
+]
+
+Server -> ThreadPool
+DbModuleConf -> DbModule
+DbProject -> DbUser
+DbTag -> DbTag
+DbCredentials -> DbUser
+Task -> Dispatcher
+Dispatcher -> WebService [lhead=clusterWebService]
+SoapRequest -> soap
+DbTag -> DbModule
+DbTag -> DbScenario
+DbDataUpdate -> DbUser
+
+// Usage --
+edge [
+dir = "front"
+arrowhead = "vee"
+taillabel = ""
+]
+
+Project -> DataStorage [lhead=clusterDb, ltail=clusterWebService]
+Dispatcher -> DataStorage [lhead=clusterDb]
+DataStorage -> DbProject [lhead=clusterData]
+Dispatcher -> SoapRequest
+Token -> SoapRequest
+SoapRequest -> Token
+Server -> Task
+
+// Aggregation
+edge [
+dir = "back"
+arrowhead = "none"
+arrowtail = "diamond"
+taillabel = ""
+]
+
+Server -> SoapRequest
+DbProject -> DbAudit
+DbAudit -> DbScenario
+DbScenario -> DbStep
+DbStep -> DbModuleConf
+DbModuleConf -> DbConfigField
+DbModule -> DbConfigField
+DbTag -> DbTag
+ThreadPool -> ThreadTask
+DbProject -> DbCredentials
+
+// Inheritance
+edge [
+dir = "both"
+arrowtail = "empty"
+taillabel = ""
+]
+
+WithSSL -> Server [ltail=clusterSSLPolicy]
+ThreadSafe -> Singleton [ltail=clusterThreadPolicy]
+SSLPolicy -> WithSSL
+SSLPolicy -> NoSSL
+Singleton -> DataStorage
+Singleton -> Logger
+ThreadTask -> Task
+WebService -> Audit
+WebService -> Project
+soap -> WebService
+ThreadPolicy -> ThreadSafe
+ThreadPolicy -> NoThread

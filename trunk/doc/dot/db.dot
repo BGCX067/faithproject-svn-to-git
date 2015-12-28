@@ -1,0 +1,150 @@
+
+subgraph clusterDb {
+label = "Db"
+
+DataStorage [
+label = "{\
+DataStorage\
+|\
++ setOpions(options : DbOptions) : void\l\
++ getSession() : dbo::session\l\
+|\
+- _options : DbOptions\l\
+- _isInit : bool\l\
+}"
+]
+
+subgraph clusterData {
+label = "Data"
+
+DbDataUpdate [
+label = "{\
+DataUpdate\
+|\
+- _user : User\l\
+- _data : string\l\
+- _upToDate : bool\l\
+}"
+]
+
+DbProject [
+label = "{\
+Project\
+|\
+- _id : int32_t\l\
+- _name : string\l\
+- _description : string\l\
+- _owner : User\l\
+- _client : User\l\
+- _creationDate : dbo::date\l\
+- _audits : dbo::collection\<Audit\>\l\
+- _credentials : dbo::collection\<Credentials\>\l\
+}"
+]
+
+DbAudit [
+label = "{\
+Audit\
+|\
+- _id : int32_t\l\
+- _name : string\l\
+- _description : string\l\
+- _creationDate : dbo::date\l\
+- _scenarios : dbo::collection\<Scenario\>\l\
+}"
+]
+
+DbScenario [
+label = "{\
+Scenario\
+|\
+- _id : int32_t\l\
+- _name : string\l\
+- _description : string\l\
+- _creationDate : dbo::date\l\
+- _steps : dbo::collection\<Step\>\l\
+}"
+]
+
+DbTag [
+label = "{\
+Tag\
+|\
+- _id : int32_t\l\
+- _key : string\l\
+- _value : string\l\
+- _parent : Tag\l\
+- _module : Module\l\
+- _scenario : Scenario\l\
+- _childs : dbo::collection\<Tag\>\l\
+}"
+]
+
+DbModule [
+label = "{\
+Module\
+|\
+- _id : int32_t\l\
+- _name : string\l\
+- _version : string\l\
+- _configuration : dbo::collection\<ConfigField\>\l\
+- _agressivityLevel : AgressivityLevel\l\
+}"
+]
+
+DbConfigField [
+label = "{\
+ConfigField\
+|\
+- _id : int32_t\l\
+- _key : string\l\
+- _values : dbo::collection\<string\>\l\
+}"
+]
+
+DbStep [
+label = "{\
+Step\
+|\
+- _id : int32_t\l\
+- _order : uint32_t\l\
+- _modules : dbo::collection\<ModuleConf\>\l\
+}"
+]
+
+DbModuleConf [
+label = "{\
+ModuleConf\
+|\
+- _id : int32_t\l\
+- _module : Module\l\
+- _configuration : dbo::collection\<ConfigField\>\l\
+}"
+]
+
+DbUser [
+label = "{\
+User\
+|\
+- _id : int32_t\l\
+- _login : string\l\
+- _password : string\l\
+- _creationDate : dbo::date\l\
+}"
+]
+
+DbCredentials [
+label = "{\
+Credentials\
+|\
+- _id : int32_t\l\
+- _user : User\l\
+- _token : string\l\
+- _rights : dbo::collection\<WebServiceName\>\l\
+}"
+]
+
+}
+
+}
+

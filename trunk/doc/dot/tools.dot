@@ -1,0 +1,81 @@
+
+subgraph clusterTools {
+label = "Tools"
+
+subgraph clusterThreadPolicy {
+label = "ThreadPolicy"
+
+ThreadPolicy [
+label = "{\
+ThreadPolicy\
+|\
++ pure virtual lock() : void\l\
++ pure virtual unlock() : void\l\
++ pure virtual trylock() : bool\l\
+}"
+]
+
+NoThread [
+label = "{\
+NoThread\
+|\
++ lock() : void\l\
++ unlock() : void\l\
++ trylock() : bool\l\
+}"
+]
+
+ThreadSafe [
+label = "{\
+ThreadSafe\
+|\
++ lock() : void\l\
++ unlock() : void\l\
++ trylock() : bool\l\
+}"
+]
+
+}
+
+Singleton [
+label = "{\
+Singleton\<T, ThreadPolicy\>\
+|\
++ static getInstance() : T\l\
++ static deleteInstance() : void\l\
+|\
+- _t : T *\l\
+}"
+]
+
+Logger [
+label = "{\
+Logger\
+|\
+...\l\
+}"
+]
+
+ThreadPool [
+label = "{\
+ThreadPool\
+|\
++ ThreadPool(maxThread : uint32_t)\l\
++ pushTask(task : ThreadTask)\l\
+|\
+- _maxThread : uint32_t\l\
+- _tasks : queue\<ThreadTask\>\l\
+}"
+]
+
+ThreadTask [
+label = "{\
+ThreadTask\
+|\
++ pure virtual operator () () : void\l\
+}"
+]
+
+}
+
+

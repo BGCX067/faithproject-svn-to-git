@@ -1,0 +1,99 @@
+
+subgraph clusterServer {
+label = "Server"
+
+Server [
+label = "{\
+Server\<SSLPolicy\>\
+|\
++ Server(port : uint16_t)\l\
++ run() : void\l\
+|\
+- _port : uint16_t\l\
+- _threadPool : ThreadPool\l\
+}"
+]
+
+Token [
+label = "{\
+Token\
+|\
++ Token(token : string)\l\
++ operator == (soapRequest : SoapRequest &) : bool\l\
+|\
++ token : string\l\
+}"
+]
+
+SoapRequest [
+label = "{\
+SoapRequest\
+|\
++ SoapRequest(soap : struct soap)\l\
++ operator == (token : Token &) : bool\l\
+- _getToken() : string\l\
+|\
+- _soap : struct soap\l\
+}"
+]
+
+Task [
+label = "{\
+Task\
+|\
++ operator () () : void\l\
+|\
+- _dispatcher : Dispatcher\l\
+}"
+]
+
+Dispatcher [
+label = "{\
+Dispatcher\
+|\
++ Dispatcher()\l\
++ dispatch(request : SoapRequest &) : void\l\
+- _reloadCredentials() : void\l\
+|\
+- _credentials : unordered_map\<Token, list\<WebService*\>\>\l\
+- _webServices : list\<WebService*\>\l\
+}"
+]
+
+subgraph clusterSSLPolicy {
+label="SSLPolicy"
+
+SSLPolicy [
+label="{\
+SSLPolicy\
+|\
++ pure virtual init() : void\l\
++ pure virtual accept(request : SoapRequest) : void\l\
+|\
+# _soap : struct soap\l\
+}"
+]
+
+WithSSL [
+label="{\
+WithSSL\
+|\
++ init() : void\l\
++ accept(request : SoapRequest) : void\l\
+|\
+}"
+]
+
+NoSSL [
+label="{\
+NoSSL\
+|\
++ init() : void\l\
++ accept(request : SoapRequest) : void\l\
+|\
+}"
+]
+
+}
+
+}
